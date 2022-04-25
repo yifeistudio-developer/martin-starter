@@ -1,12 +1,13 @@
 plugins {
-    id 'org.springframework.boot' version '2.6.7'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'signing'
+    id 'java-library'
+    id 'maven-publish'
 }
 
 group = 'com.yifeistudio'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '18'
+version = '0.0.1'
+sourceCompatibility = '17'
 
 configurations {
     compileOnly {
@@ -16,13 +17,56 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven {
+        url 'https://s01.oss.sonatype.org/content/groups/public/'
+    }
+}
+
+java {
+    withSourcesJar()
+}
+
+ext {
+    lombokVersion = '1.18.24'
+    springBootVersion = '2.6.7'
+    spaceVersion = '0.0.1-SNAPSHOT'
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    compileOnly "org.springframework.boot:spring-boot:${springBootVersion}"
+    compileOnly "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"
+    compileOnly "org.springframework.boot:spring-boot-starter-aop:${springBootVersion}"
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+
+    implementation "com.yifeistudio:space-starter:${spaceVersion}"
+
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+}
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            credentials {
+                username = ossrhUsername
+                password = ossrhPassword
+            }
+            def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+        }
+    }
+}
+
+signing {
+    sign(publishing.publications["mavenJava"])
 }
 
 tasks.named('test') {
