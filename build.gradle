@@ -30,9 +30,13 @@ ext {
     lombokVersion = '1.18.24'
     springBootVersion = '2.6.7'
     spaceVersion = '0.0.1-SNAPSHOT'
+    mybatisVersion = '3.5.9'
+    mysqlVersion = '8.0.29'
 }
 
 dependencies {
+
+    compileOnly "org.mybatis:mybatis:${mybatisVersion}"
 
     compileOnly "org.springframework.boot:spring-boot:${springBootVersion}"
     compileOnly "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"

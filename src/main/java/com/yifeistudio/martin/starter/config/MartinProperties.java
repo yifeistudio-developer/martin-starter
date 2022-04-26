@@ -14,7 +14,7 @@ public class MartinProperties {
     /**
      * 是否启用
      */
-    private boolean enable;
+    private boolean enable = true;
 
 
 }
