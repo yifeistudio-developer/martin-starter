@@ -1,14 +1,11 @@
 package com.yifeistudio.martin.starter;
 
 /**
- * File Description
+ * 调度器
  *
  * @author : hongyi
  * created at 2022/4/25 - 16:06
  **/
-public abstract class AbstractScheduler {
-
-
-
+public interface Scheduler {
 
 }

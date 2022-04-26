@@ -18,8 +18,6 @@ public enum EnvelopeAttr {
      */
     SENSITIVE(1);
 
-
-
     @Getter
     private final int code;
 
