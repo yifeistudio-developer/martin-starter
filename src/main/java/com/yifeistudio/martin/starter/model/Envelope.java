@@ -19,6 +19,16 @@ public class Envelope {
     private Long id;
 
     /**
+     * 主题
+     */
+    private String topic;
+
+    /**
+     * 标签
+     */
+    private String tags;
+
+    /**
      * 投递人ID
      */
     private Long postedBy;

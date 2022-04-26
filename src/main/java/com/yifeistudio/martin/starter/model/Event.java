@@ -23,9 +23,5 @@ public class Event {
      */
     private LocalDateTime createAt;
 
-
-
-
-
 }
 ///~
