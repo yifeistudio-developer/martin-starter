@@ -10,6 +10,7 @@ import com.yifeistudio.martin.starter.vendor.RocketMqMessageChannel;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 
 /**
  * 初始化配置
@@ -21,11 +22,13 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @ConditionalOnProperty(prefix = "martin", name = "enable", matchIfMissing = true, havingValue = "true")
 class MartinInitializer {
 
+    @Bean
     @ConditionalOnMissingBean(DataRepository.class)
     public DataRepository configDataRepository() {
         return new MybatisDataRepository();
     }
 
+    @Bean
     @ConditionalOnMissingBean(MessageChannel.class)
     public MessageChannel configMessageChannel() {
         return new RocketMqMessageChannel();
