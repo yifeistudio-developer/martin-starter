@@ -8,7 +8,7 @@ import com.yifeistudio.martin.starter.DataRepository;
  * @author : hongyi
  * created at 2022/4/26 - 19:31
  **/
-class MybatisDataRepository implements DataRepository {
+public class MybatisDataRepository implements DataRepository {
 
 
     /**

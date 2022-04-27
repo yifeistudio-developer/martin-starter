@@ -8,7 +8,6 @@ import com.yifeistudio.martin.starter.MessageChannel;
  * @author : hongyi
  * created at 2022/4/26 - 15:49
  **/
-
-class RocketMqMessageChannel implements MessageChannel {
+public class RocketMqMessageChannel implements MessageChannel {
 
 }
