@@ -3,7 +3,7 @@ package com.yifeistudio.martin.starter.vendor;
 import com.yifeistudio.martin.starter.DataRepository;
 
 /**
- * File Description
+ * mybatis
  *
  * @author : hongyi
  * created at 2022/4/26 - 19:31

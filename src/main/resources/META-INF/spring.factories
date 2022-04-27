@@ -1,1 +1,5 @@
-org.springframework.context.ApplicationListener=com.yifeistudio.martin.starter.auto.MartinListener
+org.springframework.context.ApplicationListener=\
+  com.yifeistudio.martin.starter.auto.MartinListener
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.yifeistudio.martin.starter.auto.MartinInitializer
