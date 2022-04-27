@@ -32,11 +32,16 @@ ext {
     spaceVersion = '0.0.1-SNAPSHOT'
     mybatisVersion = '3.5.9'
     mysqlVersion = '8.0.29'
+    rocketMqVersion = '4.9.3'
 }
 
 dependencies {
 
+    // 默认数据存储器
     compileOnly "org.mybatis:mybatis:${mybatisVersion}"
+
+    // 默认消息通道
+    compileOnly "org.apache.rocketmq:rocketmq-client:${rocketMqVersion}"
 
     compileOnly "org.springframework.boot:spring-boot:${springBootVersion}"
     compileOnly "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"

@@ -10,4 +10,10 @@ import com.yifeistudio.martin.starter.MessageChannel;
  **/
 class RocketMqMessageChannel implements MessageChannel {
 
+
+
+
+
+
+
 }
