@@ -34,6 +34,7 @@ class MartinInitializer {
         return new RocketMqMessageChannel();
     }
 
+    @Bean
     @ConditionalOnMissingBean(Coordinator.class)
     public Coordinator configCoordinator() {
         return new DefaultCoordinator();
