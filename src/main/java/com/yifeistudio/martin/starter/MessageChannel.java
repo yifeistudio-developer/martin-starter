@@ -8,4 +8,5 @@ package com.yifeistudio.martin.starter;
  **/
 public interface MessageChannel {
 
+    void handleMessage();
 }

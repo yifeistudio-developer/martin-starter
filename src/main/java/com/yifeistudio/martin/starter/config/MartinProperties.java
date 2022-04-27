@@ -18,4 +18,25 @@ public class MartinProperties {
      */
     private boolean enable = true;
 
+    /**
+     * 生产者
+     */
+    @Data
+    public static class Producer {
+
+    }
+
+
+    /**
+     * 消费者
+     */
+    @Data
+    public static class Consumer {
+
+        private String topic;
+
+        private String tags;
+
+    }
+
 }
