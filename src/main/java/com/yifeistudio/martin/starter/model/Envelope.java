@@ -19,6 +19,11 @@ public class Envelope {
     private Long id;
 
     /**
+     * 信件类型
+     */
+    private EnvelopeType type;
+
+    /**
      * 主题
      */
     private String topic;

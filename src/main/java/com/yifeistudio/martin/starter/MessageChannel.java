@@ -1,5 +1,9 @@
 package com.yifeistudio.martin.starter;
 
+import com.yifeistudio.martin.starter.model.Envelope;
+import com.yifeistudio.martin.starter.model.Message;
+import com.yifeistudio.space.unit.model.Result;
+
 /**
  * 消息通道
  *
@@ -8,5 +12,47 @@ package com.yifeistudio.martin.starter;
  **/
 public interface MessageChannel {
 
-    void handleMessage();
+    /**
+     * 同步投递
+     *
+     * @param envelope 信件
+     * @return 投递回执
+     * @param <T> 回执类型
+     */
+    <T> Result<T> post(Envelope envelope);
+
+    /**
+     * 异步投递
+     *
+     * @param envelope 信件
+     * @return 投递回执
+     * @param <T> 回执类型
+     */
+    <T> Result<T> postAsync(Envelope envelope);
+
+    /**
+     * 同步投递 - 消息
+     *
+     * @param message 消息
+     * @return 投递回执
+     * @param <T> 回执类型
+     */
+    <T> Result<T> post(Message message);
+
+    /**
+     * 异步投递-消息
+     *
+     * @param message 消息
+     * @return 投递回执
+     * @param <T> 回执类型
+     */
+    <T> Result<T> postAsync(Message message);
+
+    /**
+     * 信件抵达
+     *
+     * @param envelope 信件
+     */
+    void handleMessage(Envelope envelope);
+
 }

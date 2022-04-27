@@ -7,6 +7,7 @@ import com.yifeistudio.martin.starter.config.MartinProperties;
 import com.yifeistudio.martin.starter.vendor.DefaultCoordinator;
 import com.yifeistudio.martin.starter.vendor.MybatisDataRepository;
 import com.yifeistudio.martin.starter.vendor.RocketMqMessageChannel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -24,6 +25,12 @@ import org.springframework.context.annotation.Bean;
 @ConditionalOnProperty(prefix = "martin", name = "enable", matchIfMissing = true, havingValue = "true")
 class MartinInitializer {
 
+    private final MartinProperties properties;
+    @Autowired
+    public MartinInitializer(MartinProperties properties) {
+        this.properties = properties;
+    }
+
     @Bean
     @ConditionalOnMissingBean(DataRepository.class)
     public DataRepository configDataRepository() {
@@ -33,7 +40,7 @@ class MartinInitializer {
     @Bean
     @ConditionalOnMissingBean(MessageChannel.class)
     public MessageChannel configMessageChannel() {
-        return new RocketMqMessageChannel();
+        return new RocketMqMessageChannel(properties);
     }
 
     @Bean
