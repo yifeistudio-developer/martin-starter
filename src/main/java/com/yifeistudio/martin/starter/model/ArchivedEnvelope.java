@@ -29,12 +29,13 @@ public class ArchivedEnvelope {
     private Integer size;
 
     /**
+     * 归档数据
+     */
+    private byte[] data;
+
+    /**
      * 创建时间
      */
     private LocalDateTime createAt;
 
-    /**
-     * 归档数据
-     */
-    private byte[] data;
 }
