@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * created at 2022/4/28 - 09:57
  **/
 @Data
-public class ArchivedEnvelop {
+public class ArchivedEnvelope {
 
     /**
      * ID
