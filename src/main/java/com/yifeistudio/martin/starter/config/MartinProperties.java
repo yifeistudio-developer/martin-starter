@@ -37,9 +37,14 @@ public class MartinProperties {
     public static class Producer {
 
         /**
-         * 主题-标签
+         * 主题
          */
-        private Map<String, String> topicTags;
+        private String topic;
+
+        /**
+         * 标签
+         */
+        private String tags;
 
     }
 

@@ -10,10 +10,12 @@ import com.yifeistudio.space.unit.model.Tuple;
 import com.yifeistudio.space.unit.util.Asserts;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.SendResult;
+import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
+import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.util.StringUtils;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.concurrent.Future;
 
 /**
  * Rocket MQ 消息通道
@@ -22,7 +24,7 @@ import java.util.stream.Collectors;
  * created at 2022/4/26 - 15:49
  **/
 @Slf4j
-public class RocketMqMessageChannel implements MessageChannel<SendResult> {
+public class RocketMqMessageChannel implements MessageChannel {
 
     private final MartinProperties properties;
 
@@ -34,7 +36,6 @@ public class RocketMqMessageChannel implements MessageChannel<SendResult> {
     }
 
 
-
     /**
      * 同步投递
      *
@@ -42,31 +43,18 @@ public class RocketMqMessageChannel implements MessageChannel<SendResult> {
      * @return 投递回执
      */
     @Override
-    public Result<SendResult> post(Envelope envelope) {
-        return post(Collections.singleton(envelope));
-    }
-
-    @Override
-    public Result<SendResult> post(Collection<Envelope> envelopes) {
-
-        if (rocketMQTemplate == null) {
-            log.warn("cannot find the rocketMQTemplate instance in the spring context. post-request is ignored.");
-            return (Result<SendResult>) Result.fail(-1, "cannot find the rocketMQTemplate instance in the spring context");
+    public Result<String> post(Envelope envelope) {
+        Tuple<String, org.springframework.messaging.Message<Envelope>> messageTuple = wrapMqMessage(envelope);
+        if (messageTuple == null) {
+            // FIXME: 2022/4/29
+//            return Result.fail(-1, "");
+            return null;
         }
-        Asserts.notNull(envelopes, "envelope is required notNull");
-        boolean anyEnvelopeIsNull = envelopes.stream().anyMatch(Objects::isNull);
-        Asserts.isTrue(!anyEnvelopeIsNull, "contains null in collection");
-        boolean anyTopicIsNull = envelopes.stream()
-                .map(Envelope::getTopic)
-                .anyMatch(Objects::isNull);
-        Asserts.isTrue(!anyTopicIsNull, "contains null in collection");
-        Map<Envelope, List<Tuple<String, Envelope>>> groupedEnvelopes = envelopes.stream()
-                .map(envelope -> Tuple.of(String.format(envelope.getTopic(), envelope.getTags()), envelope))
-                .collect(Collectors.groupingBy(Tuple::getR));
-        // TODO: 2022/4/28 可以并行处理
-
-        return Result.success(null);
+        SendResult sendResult = rocketMQTemplate.syncSend(messageTuple.getT(), messageTuple.getR());
+        boolean isOk = sendResult.getSendStatus() == SendStatus.SEND_OK;
+        return new Result<>(isOk ? 0 : -1, sendResult.getMsgId());
     }
+
 
     /**
      * 异步投递
@@ -75,15 +63,11 @@ public class RocketMqMessageChannel implements MessageChannel<SendResult> {
      * @return 发送回执
      */
     @Override
-    public Result<SendResult> postAsync(Envelope envelope) {
+    public Future<Result<String>> postAsync(Envelope envelope) {
 
         return null;
     }
 
-    @Override
-    public Result<SendResult> postAsync(Collection<Envelope> envelopes) {
-        return null;
-    }
 
     /**
      * 同步投递 - 消息
@@ -92,7 +76,7 @@ public class RocketMqMessageChannel implements MessageChannel<SendResult> {
      * @return 投递回执
      */
     @Override
-    public Result<SendResult> post(Message message) {
+    public Result<String> post(Message message) {
 
         return null;
     }
@@ -104,7 +88,7 @@ public class RocketMqMessageChannel implements MessageChannel<SendResult> {
      * @return 投递回执
      */
     @Override
-    public Result<SendResult> postAsync(Message message) {
+    public Future<Result<String>> postAsync(Message message) {
 
         return null;
     }
@@ -117,5 +101,33 @@ public class RocketMqMessageChannel implements MessageChannel<SendResult> {
     @Override
     public void handleMessage(Envelope envelope) {
 
+    }
+
+    /**
+     * 组装发送mq 消息结构
+     *
+     * @param envelope 信件
+     * @return destination -> message.
+     */
+    private Tuple<String, org.springframework.messaging.Message<Envelope>> wrapMqMessage(Envelope envelope) {
+        if (rocketMQTemplate == null) {
+            log.warn("cannot find the rocketMQTemplate instance in the spring context. post-request is ignored.");
+            return null;
+        }
+        Asserts.notNull(envelope, "envelope is required nonNull");
+        String topic = envelope.getTopic();
+        String tags = envelope.getTags();
+        if (topic == null) {
+            MartinProperties.Producer producer = properties.getProducer();
+            topic = producer.getTopic();
+            tags = producer.getTags();
+        }
+        Asserts.notNull(topic, "cannot find any available");
+        String destination = topic.trim();
+        if (StringUtils.hasText(tags)) {
+            destination = destination + ":" + tags;
+        }
+        org.springframework.messaging.Message<Envelope> message = MessageBuilder.withPayload(envelope).build();
+        return Tuple.of(destination, message);
     }
 }
