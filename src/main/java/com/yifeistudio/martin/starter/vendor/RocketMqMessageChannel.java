@@ -9,12 +9,16 @@ import com.yifeistudio.space.unit.model.Promise;
 import com.yifeistudio.space.unit.model.Result;
 import com.yifeistudio.space.unit.model.Tuple;
 import com.yifeistudio.space.unit.util.Asserts;
+import com.yifeistudio.space.unit.util.Jsons;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.util.StringUtils;
+
+import java.util.Optional;
 
 /**
  * Rocket MQ 消息通道
@@ -43,13 +47,31 @@ public class RocketMqMessageChannel implements MessageChannel {
      */
     @Override
     public Result<String> post(Envelope envelope) {
-        Tuple<String, org.springframework.messaging.Message<Envelope>> messageTuple = wrapMqMessage(envelope);
-        if (messageTuple == null) {
-            return Result.fail(-1, "");
+        if (rocketMQTemplate == null) {
+            log.warn("cannot find the rocketMQTemplate instance in the spring context. post-request is ignored.");
+            return Result.fail(-1, "cannot find the rocketMQTemplate instance in the spring context.");
         }
-        SendResult sendResult = rocketMQTemplate.syncSend(messageTuple.getLeft(), messageTuple.getRight());
+        Asserts.notNull(envelope, "envelope is required nonNull.");
+        Asserts.notNull(envelope.getMessage(), "message is required nonNull.");
+        Asserts.notNull(envelope.getSign(), "sign is required nonNull.");
+        String topic = envelope.getTopic();
+        String tags = envelope.getTags();
+        if (topic == null) {
+            MartinProperties.Producer producer = properties.getProducer();
+            topic = producer.getTopic();
+            tags = producer.getTags();
+        }
+        Asserts.notNull(topic, "cannot find any available.");
+        String destination = topic.trim();
+        if (StringUtils.hasText(tags)) {
+            destination = destination + ":" + tags;
+        }
+        Message<String> message = MessageBuilder.withPayload(envelope.getMessage())
+                .setHeader("envelope-sign", envelope.getSign())
+                .build();
+        SendResult sendResult = rocketMQTemplate.syncSend(destination, message);
         boolean isOk = sendResult.getSendStatus() == SendStatus.SEND_OK;
-        return new Result<>(isOk ? 0 : -1, sendResult.getMsgId());
+        return isOk ? Result.success(sendResult.getMsgId()) : Result.fail(-1, "send message failed.");
     }
 
 
@@ -73,8 +95,11 @@ public class RocketMqMessageChannel implements MessageChannel {
      */
     @Override
     public Result<String> post(Object message) {
-
-        return null;
+        Optional<String> jsonStr = Jsons.stringify(message);
+        Asserts.isTrue(jsonStr.isPresent(), "message stringify failed.");
+        Envelope envelope = new Envelope();
+        envelope.setMessage(jsonStr.get());
+        return post(envelope);
     }
 
     /**
@@ -85,8 +110,7 @@ public class RocketMqMessageChannel implements MessageChannel {
      */
     @Override
     public Promise<Result<String>> postAsync(Object message) {
-
-        return null;
+        return DefaultPromise.of(() -> post(message));
     }
 
     /**
@@ -97,33 +121,8 @@ public class RocketMqMessageChannel implements MessageChannel {
     @Override
     public void handleMessage(Envelope envelope) {
 
+
+
     }
 
-    /**
-     * 组装发送mq 消息结构
-     *
-     * @param envelope 信件
-     * @return destination -> message.
-     */
-    private Tuple<String, org.springframework.messaging.Message<Envelope>> wrapMqMessage(Envelope envelope) {
-        if (rocketMQTemplate == null) {
-            log.warn("cannot find the rocketMQTemplate instance in the spring context. post-request is ignored.");
-            return null;
-        }
-        Asserts.notNull(envelope, "envelope is required nonNull");
-        String topic = envelope.getTopic();
-        String tags = envelope.getTags();
-        if (topic == null) {
-            MartinProperties.Producer producer = properties.getProducer();
-            topic = producer.getTopic();
-            tags = producer.getTags();
-        }
-        Asserts.notNull(topic, "cannot find any available");
-        String destination = topic.trim();
-        if (StringUtils.hasText(tags)) {
-            destination = destination + ":" + tags;
-        }
-        org.springframework.messaging.Message<Envelope> message = MessageBuilder.withPayload(envelope).build();
-        return Tuple.of(destination, message);
-    }
 }
