@@ -3,8 +3,8 @@ package com.yifeistudio.martin.starter;
 import com.yifeistudio.martin.starter.model.Envelope;
 import com.yifeistudio.martin.starter.model.Message;
 import com.yifeistudio.space.unit.model.Result;
+import io.netty.util.concurrent.Promise;
 
-import java.util.concurrent.Future;
 
 /**
  * 消息通道
@@ -29,7 +29,7 @@ public interface MessageChannel {
      * @param envelope 信件
      * @return 投递回执
      */
-    Future<Result<String>> postAsync(Envelope envelope);
+    Promise<Result<String>> postAsync(Envelope envelope);
 
     /**
      * 同步投递 - 消息
@@ -45,7 +45,7 @@ public interface MessageChannel {
      * @param message 消息
      * @return 投递回执
      */
-    Future<Result<String>> postAsync(Message message);
+    Promise<Result<String>> postAsync(Message message);
 
     /**
      * 信件抵达

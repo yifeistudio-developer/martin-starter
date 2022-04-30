@@ -8,14 +8,14 @@ import com.yifeistudio.space.starter.config.SpringContextHelper;
 import com.yifeistudio.space.unit.model.Result;
 import com.yifeistudio.space.unit.model.Tuple;
 import com.yifeistudio.space.unit.util.Asserts;
+import io.netty.util.concurrent.Promise;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.util.StringUtils;
-
-import java.util.concurrent.Future;
 
 /**
  * Rocket MQ 消息通道
@@ -46,11 +46,9 @@ public class RocketMqMessageChannel implements MessageChannel {
     public Result<String> post(Envelope envelope) {
         Tuple<String, org.springframework.messaging.Message<Envelope>> messageTuple = wrapMqMessage(envelope);
         if (messageTuple == null) {
-            // FIXME: 2022/4/29
-//            return Result.fail(-1, "");
-            return null;
+            return Result.fail(-1, "");
         }
-        SendResult sendResult = rocketMQTemplate.syncSend(messageTuple.getT(), messageTuple.getR());
+        SendResult sendResult = rocketMQTemplate.syncSend(messageTuple.getLeft(), messageTuple.getRight());
         boolean isOk = sendResult.getSendStatus() == SendStatus.SEND_OK;
         return new Result<>(isOk ? 0 : -1, sendResult.getMsgId());
     }
@@ -63,8 +61,27 @@ public class RocketMqMessageChannel implements MessageChannel {
      * @return 发送回执
      */
     @Override
-    public Future<Result<String>> postAsync(Envelope envelope) {
+    public Promise<Result<String>> postAsync(Envelope envelope) {
+        Tuple<String, org.springframework.messaging.Message<Envelope>> messageTuple = wrapMqMessage(envelope);
+        if (messageTuple == null) {
+            // FIXME: 2022/4/29
+//            return Result.fail(-1, "");
+            return null;
+        }
 
+        rocketMQTemplate.asyncSend(messageTuple.getLeft(), messageTuple.getRight(), new SendCallback() {
+            @Override
+            public void onSuccess(SendResult sendResult) {
+
+            }
+
+            @Override
+            public void onException(Throwable e) {
+
+            }
+        });
+
+        // FIXME: 2022/4/29 Promise
         return null;
     }
 
@@ -88,7 +105,7 @@ public class RocketMqMessageChannel implements MessageChannel {
      * @return 投递回执
      */
     @Override
-    public Future<Result<String>> postAsync(Message message) {
+    public Promise<Result<String>> postAsync(Message message) {
 
         return null;
     }
