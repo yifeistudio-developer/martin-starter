@@ -37,6 +37,11 @@ public class MartinProperties {
     public static class Producer {
 
         /**
+         * 生产组名
+         */
+        private String group;
+
+        /**
          * 主题
          */
         private String topic;
@@ -54,6 +59,11 @@ public class MartinProperties {
      */
     @Data
     public static class Consumer {
+
+        /**
+         * 消费组名
+         */
+        private String group;
 
         /**
          * 主题-标签

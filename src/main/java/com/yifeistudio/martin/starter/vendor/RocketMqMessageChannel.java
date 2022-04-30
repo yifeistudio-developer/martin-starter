@@ -18,6 +18,8 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.util.StringUtils;
 
+import java.util.Collections;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -36,6 +38,33 @@ public class RocketMqMessageChannel implements MessageChannel {
     public RocketMqMessageChannel(MartinProperties properties) {
         this.properties = properties;
         SpringContextHelper.getBean(RocketMQTemplate.class).ifPresent(bean -> rocketMQTemplate = bean);
+        try {
+            tryInit();
+        } catch (Throwable e) {
+            // ignore the error
+            log.error("init RocketMqMessageChannel failed. - ", e);
+        }
+    }
+
+    /**
+     * 初始化
+     */
+    private void tryInit() {
+        // init consumer
+        MartinProperties.Consumer consumer = properties.getConsumer();
+        Map<String, String> topicTags = Optional.ofNullable(consumer)
+                .map(MartinProperties.Consumer::getTopicTags)
+                .orElse(Collections.emptyMap());
+        if (topicTags.isEmpty()) {
+            log.warn("cannot find any consumer information. init is skipped.");
+            return;
+        }
+//        rocketMQTemplate.getConsumer();
+
+        // init producer.
+
+
+
     }
 
 
