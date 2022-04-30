@@ -3,14 +3,13 @@ package com.yifeistudio.martin.starter.vendor;
 import com.yifeistudio.martin.starter.MessageChannel;
 import com.yifeistudio.martin.starter.config.MartinProperties;
 import com.yifeistudio.martin.starter.model.Envelope;
-import com.yifeistudio.martin.starter.model.Message;
 import com.yifeistudio.space.starter.config.SpringContextHelper;
+import com.yifeistudio.space.unit.model.DefaultPromise;
+import com.yifeistudio.space.unit.model.Promise;
 import com.yifeistudio.space.unit.model.Result;
 import com.yifeistudio.space.unit.model.Tuple;
 import com.yifeistudio.space.unit.util.Asserts;
-import io.netty.util.concurrent.Promise;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
@@ -62,27 +61,7 @@ public class RocketMqMessageChannel implements MessageChannel {
      */
     @Override
     public Promise<Result<String>> postAsync(Envelope envelope) {
-        Tuple<String, org.springframework.messaging.Message<Envelope>> messageTuple = wrapMqMessage(envelope);
-        if (messageTuple == null) {
-            // FIXME: 2022/4/29
-//            return Result.fail(-1, "");
-            return null;
-        }
-
-        rocketMQTemplate.asyncSend(messageTuple.getLeft(), messageTuple.getRight(), new SendCallback() {
-            @Override
-            public void onSuccess(SendResult sendResult) {
-
-            }
-
-            @Override
-            public void onException(Throwable e) {
-
-            }
-        });
-
-        // FIXME: 2022/4/29 Promise
-        return null;
+        return DefaultPromise.of(() -> post(envelope));
     }
 
 
@@ -93,7 +72,7 @@ public class RocketMqMessageChannel implements MessageChannel {
      * @return 投递回执
      */
     @Override
-    public Result<String> post(Message message) {
+    public Result<String> post(Object message) {
 
         return null;
     }
@@ -105,7 +84,7 @@ public class RocketMqMessageChannel implements MessageChannel {
      * @return 投递回执
      */
     @Override
-    public Promise<Result<String>> postAsync(Message message) {
+    public Promise<Result<String>> postAsync(Object message) {
 
         return null;
     }

@@ -1,9 +1,8 @@
 package com.yifeistudio.martin.starter;
 
 import com.yifeistudio.martin.starter.model.Envelope;
-import com.yifeistudio.martin.starter.model.Message;
+import com.yifeistudio.space.unit.model.Promise;
 import com.yifeistudio.space.unit.model.Result;
-import io.netty.util.concurrent.Promise;
 
 
 /**
@@ -37,7 +36,7 @@ public interface MessageChannel {
      * @param message 消息
      * @return 投递回执
      */
-    Result<String> post(Message message);
+    Result<String> post(Object message);
 
     /**
      * 异步投递-消息
@@ -45,7 +44,7 @@ public interface MessageChannel {
      * @param message 消息
      * @return 投递回执
      */
-    Promise<Result<String>> postAsync(Message message);
+    Promise<Result<String>> postAsync(Object message);
 
     /**
      * 信件抵达

@@ -81,7 +81,7 @@ public class Envelope {
     /**
      * 信件
      */
-    private Message message;
+    private String message;
 
     /**
      * 创建时间
