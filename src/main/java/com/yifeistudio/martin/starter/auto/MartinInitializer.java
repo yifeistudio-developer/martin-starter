@@ -5,7 +5,7 @@ import com.yifeistudio.martin.starter.DataRepository;
 import com.yifeistudio.martin.starter.MessageChannel;
 import com.yifeistudio.martin.starter.config.MartinProperties;
 import com.yifeistudio.martin.starter.vendor.DefaultCoordinator;
-import com.yifeistudio.martin.starter.vendor.MybatisDataRepository;
+import com.yifeistudio.martin.starter.vendor.DefaultRepository;
 import com.yifeistudio.martin.starter.vendor.RocketMqMessageChannel;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ class MartinInitializer {
     @ConditionalOnBean(DataSource.class)
     @ConditionalOnMissingBean(DataRepository.class)
     public DataRepository configDataRepository() {
-        return new MybatisDataRepository();
+        return new DefaultRepository();
     }
 
     @Bean

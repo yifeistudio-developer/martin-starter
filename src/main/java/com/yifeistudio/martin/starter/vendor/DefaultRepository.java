@@ -3,8 +3,8 @@ package com.yifeistudio.martin.starter.vendor;
 import com.yifeistudio.martin.starter.DataRepository;
 import com.yifeistudio.martin.starter.model.Envelope;
 import com.yifeistudio.martin.starter.model.EnvelopeStatus;
+import com.yifeistudio.space.starter.config.SpringContextHelper;
 
-import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.List;
 
@@ -14,10 +14,15 @@ import java.util.List;
  * @author : hongyi
  * created at 2022/4/26 - 19:31
  **/
-public class MybatisDataRepository implements DataRepository {
+public class DefaultRepository implements DataRepository {
 
-    @Resource
     private DataSource dataSource;
+
+
+    public DefaultRepository() {
+        SpringContextHelper.getBean(DataSource.class)
+                .ifPresent(ds -> dataSource = ds);
+    }
 
     /**
      * 创建
@@ -58,7 +63,6 @@ public class MybatisDataRepository implements DataRepository {
      */
     @Override
     public List<Envelope> listByStatus(int limit, EnvelopeStatus... status) {
-
 
         return null;
     }
