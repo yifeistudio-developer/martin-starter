@@ -1,5 +1,7 @@
 package com.yifeistudio.martin.starter;
 
+import com.yifeistudio.martin.starter.model.Envelope;
+
 /**
  * 数据存储器
  *
@@ -11,11 +13,12 @@ public interface DataRepository {
     /**
      * 创建
      */
-    void insert();
+    void insert(Envelope envelope);
 
     /**
      * 根据主键更新记录
      */
-    void updateById();
+    void updateById(Envelope envelope);
+
 
 }

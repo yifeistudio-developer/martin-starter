@@ -1,6 +1,7 @@
 package com.yifeistudio.martin.starter.vendor;
 
 import com.yifeistudio.martin.starter.DataRepository;
+import com.yifeistudio.martin.starter.model.Envelope;
 
 /**
  * mybatis
@@ -13,17 +14,21 @@ public class MybatisDataRepository implements DataRepository {
 
     /**
      * 创建
+     *
+     * @param envelope
      */
     @Override
-    public void insert() {
+    public void insert(Envelope envelope) {
 
     }
 
     /**
      * 根据主键更新记录
+     *
+     * @param envelope
      */
     @Override
-    public void updateById() {
+    public void updateById(Envelope envelope) {
 
     }
 }
