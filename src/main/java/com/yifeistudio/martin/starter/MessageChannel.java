@@ -4,6 +4,8 @@ import com.yifeistudio.martin.starter.model.Envelope;
 import com.yifeistudio.space.unit.model.Promise;
 import com.yifeistudio.space.unit.model.Result;
 
+import java.util.Optional;
+
 
 /**
  * 消息通道
@@ -19,7 +21,7 @@ public interface MessageChannel {
      * @param envelope 信件
      * @return 投递回执
      */
-    Result<String> post(Envelope envelope);
+    Optional<String> post(Envelope envelope);
 
 
     /**
@@ -28,22 +30,6 @@ public interface MessageChannel {
      * @param envelope 信件
      * @return 投递回执
      */
-    Promise<Result<String>> postAsync(Envelope envelope);
-
-    /**
-     * 同步投递 - 消息
-     *
-     * @param message 消息
-     * @return 投递回执
-     */
-    Result<String> post(Object message);
-
-    /**
-     * 异步投递-消息
-     *
-     * @param message 消息
-     * @return 投递回执
-     */
-    Promise<Result<String>> postAsync(Object message);
+    Promise<Optional<String>> postAsync(Envelope envelope);
 
 }
