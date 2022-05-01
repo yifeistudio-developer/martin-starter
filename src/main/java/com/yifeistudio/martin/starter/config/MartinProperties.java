@@ -1,5 +1,6 @@
 package com.yifeistudio.martin.starter.config;
 
+import com.yifeistudio.martin.starter.model.StartMode;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -17,5 +18,11 @@ public class MartinProperties {
      * 是否启用
      */
     private boolean enable = true;
+
+    /**
+     * 启动模式
+     */
+    private StartMode mode = StartMode.INIT;
+
 
 }

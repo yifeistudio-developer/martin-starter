@@ -15,6 +15,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
+import javax.sql.DataSource;
+
 
 /**
  * 初始化配置
@@ -29,14 +31,13 @@ import org.springframework.context.annotation.Bean;
         havingValue = "true")
 class MartinInitializer {
 
-    private final MartinProperties properties;
-
     @Autowired
     public MartinInitializer(MartinProperties properties) {
-        this.properties = properties;
+
     }
 
     @Bean
+    @ConditionalOnBean(DataSource.class)
     @ConditionalOnMissingBean(DataRepository.class)
     public DataRepository configDataRepository() {
         return new MybatisDataRepository();
