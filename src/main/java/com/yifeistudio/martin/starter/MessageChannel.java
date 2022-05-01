@@ -46,11 +46,4 @@ public interface MessageChannel {
      */
     Promise<Result<String>> postAsync(Object message);
 
-    /**
-     * 信件抵达
-     *
-     * @param envelope 信件
-     */
-    void handleMessage(Envelope envelope);
-
 }

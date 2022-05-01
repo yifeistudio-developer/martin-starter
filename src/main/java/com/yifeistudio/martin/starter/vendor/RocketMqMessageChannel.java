@@ -31,20 +31,6 @@ public class RocketMqMessageChannel implements MessageChannel {
 
     public RocketMqMessageChannel() {
         SpringContextHelper.getBean(RocketMQTemplate.class).ifPresent(bean -> rocketMQTemplate = bean);
-        try {
-            tryInit();
-        } catch (Throwable e) {
-            // ignore the error
-            log.error("init RocketMqMessageChannel failed. - ", e);
-        }
-    }
-
-    /**
-     * 初始化
-     */
-    private void tryInit() {
-
-
     }
 
 
@@ -115,18 +101,6 @@ public class RocketMqMessageChannel implements MessageChannel {
     @Override
     public Promise<Result<String>> postAsync(Object message) {
         return DefaultPromise.of(() -> post(message));
-    }
-
-    /**
-     * 信件抵达
-     *
-     * @param envelope 信件
-     */
-    @Override
-    public void handleMessage(Envelope envelope) {
-
-
-
     }
 
 }
