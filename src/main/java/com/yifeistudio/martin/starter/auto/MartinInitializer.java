@@ -23,7 +23,10 @@ import org.springframework.context.annotation.Bean;
  * created at 2022/4/27 - 15:31
  **/
 @EnableConfigurationProperties({MartinProperties.class})
-@ConditionalOnProperty(prefix = "martin", name = "enable", matchIfMissing = true, havingValue = "true")
+@ConditionalOnProperty(prefix = "martin",
+        name = "enable",
+        matchIfMissing = true,
+        havingValue = "true")
 class MartinInitializer {
 
     private final MartinProperties properties;
