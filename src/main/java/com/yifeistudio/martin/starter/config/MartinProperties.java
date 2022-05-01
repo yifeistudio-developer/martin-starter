@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * created at 2022/4/26 - 13:38
  **/
 @Data
-@ConfigurationProperties(prefix = "martin")
+@ConfigurationProperties(prefix = "space.martin")
 public class MartinProperties {
 
     /**
