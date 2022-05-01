@@ -11,6 +11,7 @@ import com.yifeistudio.space.unit.model.Tuple;
 import com.yifeistudio.space.unit.util.Asserts;
 import com.yifeistudio.space.unit.util.Jsons;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.client.consumer.DefaultLitePullConsumer;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
@@ -59,6 +60,13 @@ public class RocketMqMessageChannel implements MessageChannel {
             log.warn("cannot find any consumer information. init is skipped.");
             return;
         }
+        DefaultLitePullConsumer defaultConsumer = rocketMQTemplate.getConsumer();
+        if (defaultConsumer == null) {
+            log.warn("cannot get consumer instance from template. The default consumer will be created.");
+            defaultConsumer = new DefaultLitePullConsumer();
+            rocketMQTemplate.setConsumer(defaultConsumer);
+        }
+
 //        rocketMQTemplate.getConsumer();
 
         // init producer.
