@@ -48,7 +48,7 @@ dependencies {
     compileOnly "org.springframework.boot:spring-boot-starter-aop:${springBootVersion}"
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
 
-    implementation "com.yifeistudio:space-starter:${spaceVersion}"
+    api "com.yifeistudio:space-starter:${spaceVersion}"
 
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
