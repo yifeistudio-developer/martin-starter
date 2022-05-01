@@ -2,7 +2,6 @@ package com.yifeistudio.martin.starter;
 
 import com.yifeistudio.martin.starter.model.Envelope;
 import com.yifeistudio.space.unit.model.Promise;
-import com.yifeistudio.space.unit.model.Result;
 
 import java.util.Optional;
 
