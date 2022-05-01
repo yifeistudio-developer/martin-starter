@@ -1,17 +1,14 @@
 package com.yifeistudio.martin.starter.vendor;
 
 import com.yifeistudio.martin.starter.MessageChannel;
-import com.yifeistudio.martin.starter.config.MartinProperties;
 import com.yifeistudio.martin.starter.model.Envelope;
 import com.yifeistudio.space.starter.config.SpringContextHelper;
 import com.yifeistudio.space.unit.model.DefaultPromise;
 import com.yifeistudio.space.unit.model.Promise;
 import com.yifeistudio.space.unit.model.Result;
-import com.yifeistudio.space.unit.model.Tuple;
 import com.yifeistudio.space.unit.util.Asserts;
 import com.yifeistudio.space.unit.util.Jsons;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.client.consumer.DefaultLitePullConsumer;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
@@ -19,8 +16,6 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.util.StringUtils;
 
-import java.util.Collections;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -32,12 +27,9 @@ import java.util.Optional;
 @Slf4j
 public class RocketMqMessageChannel implements MessageChannel {
 
-    private final MartinProperties properties;
-
     private RocketMQTemplate rocketMQTemplate;
 
-    public RocketMqMessageChannel(MartinProperties properties) {
-        this.properties = properties;
+    public RocketMqMessageChannel() {
         SpringContextHelper.getBean(RocketMQTemplate.class).ifPresent(bean -> rocketMQTemplate = bean);
         try {
             tryInit();
@@ -51,26 +43,6 @@ public class RocketMqMessageChannel implements MessageChannel {
      * 初始化
      */
     private void tryInit() {
-        // init consumer
-        MartinProperties.Consumer consumer = properties.getConsumer();
-        Map<String, String> topicTags = Optional.ofNullable(consumer)
-                .map(MartinProperties.Consumer::getTopicTags)
-                .orElse(Collections.emptyMap());
-        if (topicTags.isEmpty()) {
-            log.warn("cannot find any consumer information. init is skipped.");
-            return;
-        }
-        DefaultLitePullConsumer defaultConsumer = rocketMQTemplate.getConsumer();
-        if (defaultConsumer == null) {
-            log.warn("cannot get consumer instance from template. The default consumer will be created.");
-            defaultConsumer = new DefaultLitePullConsumer();
-            rocketMQTemplate.setConsumer(defaultConsumer);
-        }
-
-//        rocketMQTemplate.getConsumer();
-
-        // init producer.
-
 
 
     }
@@ -93,11 +65,6 @@ public class RocketMqMessageChannel implements MessageChannel {
         Asserts.notNull(envelope.getSign(), "sign is required nonNull.");
         String topic = envelope.getTopic();
         String tags = envelope.getTags();
-        if (topic == null) {
-            MartinProperties.Producer producer = properties.getProducer();
-            topic = producer.getTopic();
-            tags = producer.getTags();
-        }
         Asserts.notNull(topic, "cannot find any available.");
         String destination = topic.trim();
         if (StringUtils.hasText(tags)) {
