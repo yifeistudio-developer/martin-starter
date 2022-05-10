@@ -6,6 +6,9 @@ import com.yifeistudio.martin.starter.model.EnvelopeStatus;
 import com.yifeistudio.space.starter.config.SpringContextHelper;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -51,6 +54,11 @@ public class DefaultRepository implements DataRepository {
 
     @Override
     public Envelope getBySign(String sign) {
+        try {
+            Connection connection = dataSource.getConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 
@@ -72,6 +80,15 @@ public class DefaultRepository implements DataRepository {
      */
     @Override
     public void initDB() {
+
+
+        try {
+            Connection connection = dataSource.getConnection();
+            DatabaseMetaData metaData = connection.getMetaData();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 
