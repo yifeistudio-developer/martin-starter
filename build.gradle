@@ -28,9 +28,9 @@ java {
 
 ext {
     lombokVersion = '1.18.24'
-    springBootVersion = '2.6.7'
+    springBootVersion = '2.7.0'
     spaceVersion = '0.0.1-SNAPSHOT'
-    mybatisVersion = '3.5.9'
+    mybatisVersion = '3.5.10'
     mysqlVersion = '8.0.29'
     rocketMqVersion = '2.2.2'
 }
