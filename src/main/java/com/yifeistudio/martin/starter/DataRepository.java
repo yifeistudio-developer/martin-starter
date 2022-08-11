@@ -40,7 +40,4 @@ public interface DataRepository {
      * 初始化数据库配置
      */
     void initDB();
-
-
-
 }
