@@ -53,11 +53,12 @@ public class RocketMqMessageChannel implements MessageChannel {
         if (StringUtils.hasText(tags)) {
             destination = destination + ":" + tags;
         }
-        Message<String> message = MessageBuilder.withPayload(envelope.getMessage())
-                .setHeader("envelope-sign", envelope.getSign())
-                .build();
-        SendResult sendResult = rocketMQTemplate.syncSend(destination, message);
-        return Optional.ofNullable(sendResult.getMsgId());
+//        Message<String> message = MessageBuilder.withPayload(envelope.getMessage())
+//                .setHeader("envelope-sign", envelope.getSign())
+//                .build();
+//        SendResult sendResult = rocketMQTemplate.syncSend(destination, message);
+//        return Optional.ofNullable(sendResult.getMsgId());
+        return Optional.empty();
     }
 
 
