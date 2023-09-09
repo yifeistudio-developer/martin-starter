@@ -1,7 +1,7 @@
 package com.yifeistudio.martin.starter.vendor;
 
 import com.yifeistudio.martin.starter.MessageChannel;
-import com.yifeistudio.martin.starter.model.Envelope;
+import com.yifeistudio.martin.starter.model.AbstractEnvelope;
 import com.yifeistudio.space.starter.config.SpringContextHelper;
 import com.yifeistudio.space.unit.model.DefaultPromise;
 import com.yifeistudio.space.unit.model.Promise;
@@ -38,7 +38,7 @@ public class RocketMqMessageChannel implements MessageChannel {
      * @return 投递回执
      */
     @Override
-    public Optional<String> post(Envelope envelope) {
+    public Optional<String> post(AbstractEnvelope envelope) {
         if (rocketMQTemplate == null) {
             log.warn("cannot find the rocketMQTemplate instance in the spring context. post-request is ignored.");
             return Optional.empty();
@@ -68,7 +68,7 @@ public class RocketMqMessageChannel implements MessageChannel {
      * @return 发送回执
      */
     @Override
-    public Promise<Optional<String>> postAsync(Envelope envelope) {
+    public Promise<Optional<String>> postAsync(AbstractEnvelope envelope) {
         return DefaultPromise.of(() -> post(envelope));
     }
 

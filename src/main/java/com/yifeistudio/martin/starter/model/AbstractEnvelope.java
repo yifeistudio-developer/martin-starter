@@ -11,7 +11,11 @@ import java.time.LocalDateTime;
  * created at 2022/4/26 - 13:00
  **/
 @Data
-public class Envelope {
+public abstract class AbstractEnvelope<T>{
+
+    public abstract void setMessage(T message);
+
+    public abstract T getMessage();
 
     /**
      * ID
@@ -21,7 +25,7 @@ public class Envelope {
     /**
      * 信件类型
      */
-    private EnvelopeType type;
+    private EnvelopeTypeEnum type;
 
     /**
      * 主题
@@ -66,22 +70,12 @@ public class Envelope {
     /**
      * 状态
      */
-    private EnvelopeStatus status;
+    private EnvelopeStatusEnum status;
 
     /**
      * 年龄
      */
     private Integer age;
-
-    /**
-     * 最大年龄限制
-     */
-    private Integer maxAge;
-
-    /**
-     * 信件
-     */
-    private String message;
 
     /**
      * 创建时间

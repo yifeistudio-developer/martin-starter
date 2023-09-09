@@ -6,7 +6,7 @@ package com.yifeistudio.martin.starter.model;
  * @author : hongyi
  * created at 2022/5/1 - 18:01
  **/
-public enum StartMode {
+public enum StartModeEnum {
 
     /**
      * 初始化

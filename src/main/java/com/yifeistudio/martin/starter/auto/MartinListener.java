@@ -1,11 +1,10 @@
 package com.yifeistudio.martin.starter.auto;
 
 import com.yifeistudio.martin.starter.DataRepository;
-import com.yifeistudio.martin.starter.config.MartinProperties;
-import com.yifeistudio.martin.starter.model.StartMode;
+import com.yifeistudio.martin.starter.MartinProperties;
+import com.yifeistudio.martin.starter.model.StartModeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationPreparedEvent;
-import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 
 import javax.annotation.Resource;
@@ -32,8 +31,8 @@ class MartinListener implements ApplicationListener<ApplicationPreparedEvent> {
      */
     @Override
     public void onApplicationEvent(ApplicationPreparedEvent event) {
-        StartMode mode = properties.getMode();
-        if (mode == StartMode.INIT) {
+        StartModeEnum mode = properties.getMode();
+        if (mode == StartModeEnum.INIT) {
             dataRepository.initDB();
         }
     }

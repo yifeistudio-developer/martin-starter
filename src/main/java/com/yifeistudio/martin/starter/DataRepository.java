@@ -1,7 +1,7 @@
 package com.yifeistudio.martin.starter;
 
-import com.yifeistudio.martin.starter.model.Envelope;
-import com.yifeistudio.martin.starter.model.EnvelopeStatus;
+import com.yifeistudio.martin.starter.model.AbstractEnvelope;
+import com.yifeistudio.martin.starter.model.EnvelopeStatusEnum;
 
 import java.util.List;
 
@@ -16,16 +16,16 @@ public interface DataRepository {
     /**
      * 创建
      */
-    void insert(Envelope envelope);
+    void insert(AbstractEnvelope envelope);
 
     /**
      * 根据主键更新记录
      */
-    void updateById(Envelope envelope);
+    void updateById(AbstractEnvelope envelope);
 
-    Envelope getById(long id);
+    AbstractEnvelope getById(long id);
 
-    Envelope getBySign(String sign);
+    AbstractEnvelope getBySign(String sign);
 
     /**
      * 根据状态查询
@@ -34,7 +34,7 @@ public interface DataRepository {
      * @param status 状态
      * @return 信件列表
      */
-    List<Envelope> listByStatus(int limit, EnvelopeStatus... status);
+    List<AbstractEnvelope> listByStatus(int limit, EnvelopeStatusEnum... status);
 
     /**
      * 初始化数据库配置

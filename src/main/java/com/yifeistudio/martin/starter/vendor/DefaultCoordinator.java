@@ -20,7 +20,6 @@ public class DefaultCoordinator implements Coordinator {
      */
     @Override
     public long incrAndGetSeq() {
-
         return 0;
     }
 
@@ -32,7 +31,6 @@ public class DefaultCoordinator implements Coordinator {
      */
     @Override
     public boolean tryLock(String key) {
-
         return false;
     }
 

@@ -3,7 +3,7 @@ package com.yifeistudio.martin.starter.auto;
 import com.yifeistudio.martin.starter.Coordinator;
 import com.yifeistudio.martin.starter.DataRepository;
 import com.yifeistudio.martin.starter.MessageChannel;
-import com.yifeistudio.martin.starter.config.MartinProperties;
+import com.yifeistudio.martin.starter.MartinProperties;
 import com.yifeistudio.martin.starter.vendor.DefaultCoordinator;
 import com.yifeistudio.martin.starter.vendor.DefaultRepository;
 import com.yifeistudio.martin.starter.vendor.RocketMqMessageChannel;

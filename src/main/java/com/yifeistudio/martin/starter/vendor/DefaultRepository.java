@@ -1,8 +1,8 @@
 package com.yifeistudio.martin.starter.vendor;
 
 import com.yifeistudio.martin.starter.DataRepository;
-import com.yifeistudio.martin.starter.model.Envelope;
-import com.yifeistudio.martin.starter.model.EnvelopeStatus;
+import com.yifeistudio.martin.starter.model.AbstractEnvelope;
+import com.yifeistudio.martin.starter.model.EnvelopeStatusEnum;
 import com.yifeistudio.space.starter.config.SpringContextHelper;
 
 import javax.sql.DataSource;
@@ -33,7 +33,7 @@ public class DefaultRepository implements DataRepository {
      * @param envelope 信件
      */
     @Override
-    public void insert(Envelope envelope) {
+    public void insert(AbstractEnvelope envelope) {
 
     }
 
@@ -43,17 +43,17 @@ public class DefaultRepository implements DataRepository {
      * @param envelope 信件
      */
     @Override
-    public void updateById(Envelope envelope) {
+    public void updateById(AbstractEnvelope envelope) {
 
     }
 
     @Override
-    public Envelope getById(long id) {
+    public AbstractEnvelope getById(long id) {
         return null;
     }
 
     @Override
-    public Envelope getBySign(String sign) {
+    public AbstractEnvelope getBySign(String sign) {
         try {
             Connection connection = dataSource.getConnection();
         } catch (SQLException e) {
@@ -70,7 +70,7 @@ public class DefaultRepository implements DataRepository {
      * @return 信件列表
      */
     @Override
-    public List<Envelope> listByStatus(int limit, EnvelopeStatus... status) {
+    public List<AbstractEnvelope> listByStatus(int limit, EnvelopeStatusEnum... status) {
 
         return null;
     }

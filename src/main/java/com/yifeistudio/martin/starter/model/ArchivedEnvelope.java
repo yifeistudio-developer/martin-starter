@@ -26,7 +26,7 @@ public class ArchivedEnvelope {
     /**
      * 归档大小
      */
-    private Integer size;
+    private Long size;
 
     /**
      * 归档数据
