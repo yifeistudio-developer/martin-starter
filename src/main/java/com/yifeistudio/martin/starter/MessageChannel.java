@@ -20,7 +20,7 @@ public interface MessageChannel {
      * @param envelope 信件
      * @return 投递回执
      */
-    Optional<String> post(AbstractEnvelope envelope);
+    Optional<String> post(AbstractEnvelope<?> envelope);
 
 
     /**
@@ -29,6 +29,6 @@ public interface MessageChannel {
      * @param envelope 信件
      * @return 投递回执
      */
-    Promise<Optional<String>> postAsync(AbstractEnvelope envelope);
+    Promise<Optional<String>> postAsync(AbstractEnvelope<?> envelope);
 
 }

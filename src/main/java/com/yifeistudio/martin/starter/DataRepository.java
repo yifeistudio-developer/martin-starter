@@ -16,16 +16,16 @@ public interface DataRepository {
     /**
      * 创建
      */
-    void insert(AbstractEnvelope envelope);
+    void insert(AbstractEnvelope<?> envelope);
 
     /**
      * 根据主键更新记录
      */
-    void updateById(AbstractEnvelope envelope);
+    void updateById(AbstractEnvelope<?> envelope);
 
-    AbstractEnvelope getById(long id);
+    <T> AbstractEnvelope<T> getById(long id);
 
-    AbstractEnvelope getBySign(String sign);
+    <T> AbstractEnvelope<T> getBySign(String sign);
 
     /**
      * 根据状态查询
@@ -34,7 +34,7 @@ public interface DataRepository {
      * @param status 状态
      * @return 信件列表
      */
-    List<AbstractEnvelope> listByStatus(int limit, EnvelopeStatusEnum... status);
+    <T> List<AbstractEnvelope<T>> listByStatus(int limit, EnvelopeStatusEnum... status);
 
     /**
      * 初始化数据库配置

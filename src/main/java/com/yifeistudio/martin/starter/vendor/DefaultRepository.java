@@ -33,7 +33,7 @@ public class DefaultRepository implements DataRepository {
      * @param envelope 信件
      */
     @Override
-    public void insert(AbstractEnvelope envelope) {
+    public void insert(AbstractEnvelope<?> envelope) {
 
     }
 
@@ -43,17 +43,17 @@ public class DefaultRepository implements DataRepository {
      * @param envelope 信件
      */
     @Override
-    public void updateById(AbstractEnvelope envelope) {
+    public void updateById(AbstractEnvelope<?> envelope) {
 
     }
 
     @Override
-    public AbstractEnvelope getById(long id) {
+    public <T> AbstractEnvelope<T> getById(long id) {
         return null;
     }
 
     @Override
-    public AbstractEnvelope getBySign(String sign) {
+    public <T> AbstractEnvelope<T> getBySign(String sign) {
         try {
             Connection connection = dataSource.getConnection();
         } catch (SQLException e) {
@@ -70,8 +70,7 @@ public class DefaultRepository implements DataRepository {
      * @return 信件列表
      */
     @Override
-    public List<AbstractEnvelope> listByStatus(int limit, EnvelopeStatusEnum... status) {
-
+    public <T> List<AbstractEnvelope<T>> listByStatus(int limit, EnvelopeStatusEnum... status) {
         return null;
     }
 
@@ -80,16 +79,12 @@ public class DefaultRepository implements DataRepository {
      */
     @Override
     public void initDB() {
-
-
         try {
             Connection connection = dataSource.getConnection();
             DatabaseMetaData metaData = connection.getMetaData();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
 
