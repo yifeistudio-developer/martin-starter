@@ -1,6 +1,6 @@
 package com.yifeistudio.martin.starter.auto;
 
-import com.yifeistudio.martin.starter.DataRepository;
+import com.yifeistudio.martin.starter.EnvelopeRepository;
 import com.yifeistudio.martin.starter.MartinProperties;
 import com.yifeistudio.martin.starter.model.StartModeEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ class MartinListener implements ApplicationListener<ApplicationPreparedEvent> {
     private MartinProperties properties;
 
     @Resource
-    private DataRepository dataRepository;
+    private EnvelopeRepository envelopeRepository;
 
     /**
      * 监听Spring上下文事件
@@ -33,7 +33,7 @@ class MartinListener implements ApplicationListener<ApplicationPreparedEvent> {
     public void onApplicationEvent(ApplicationPreparedEvent event) {
         StartModeEnum mode = properties.getMode();
         if (mode == StartModeEnum.INIT) {
-            dataRepository.initDB();
+            envelopeRepository.initDB();
         }
     }
 

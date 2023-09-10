@@ -1,12 +1,12 @@
 package com.yifeistudio.martin.starter.auto;
 
 import com.yifeistudio.martin.starter.Coordinator;
-import com.yifeistudio.martin.starter.DataRepository;
-import com.yifeistudio.martin.starter.MessageChannel;
+import com.yifeistudio.martin.starter.EnvelopeRepository;
+import com.yifeistudio.martin.starter.Channel;
 import com.yifeistudio.martin.starter.MartinProperties;
 import com.yifeistudio.martin.starter.vendor.DefaultCoordinator;
-import com.yifeistudio.martin.starter.vendor.DefaultRepository;
-import com.yifeistudio.martin.starter.vendor.RocketMqMessageChannel;
+import com.yifeistudio.martin.starter.vendor.DefaultEnvelopeRepository;
+import com.yifeistudio.martin.starter.vendor.RocketMqChannel;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -38,16 +38,16 @@ class MartinInitializer {
 
     @Bean
     @ConditionalOnBean(DataSource.class)
-    @ConditionalOnMissingBean(DataRepository.class)
-    public DataRepository configDataRepository() {
-        return new DefaultRepository();
+    @ConditionalOnMissingBean(EnvelopeRepository.class)
+    public EnvelopeRepository configDataRepository() {
+        return new DefaultEnvelopeRepository();
     }
 
     @Bean
     @ConditionalOnBean(RocketMQTemplate.class)
-    @ConditionalOnMissingBean(MessageChannel.class)
-    public MessageChannel configMessageChannel() {
-        return new RocketMqMessageChannel();
+    @ConditionalOnMissingBean(Channel.class)
+    public Channel configMessageChannel() {
+        return new RocketMqChannel();
     }
 
     @Bean

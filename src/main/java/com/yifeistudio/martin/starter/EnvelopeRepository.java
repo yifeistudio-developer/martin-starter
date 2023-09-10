@@ -11,7 +11,7 @@ import java.util.List;
  * @author : hongyi
  * created at 2022/4/26 - 15:35
  **/
-public interface DataRepository {
+public interface EnvelopeRepository {
 
     /**
      * 创建

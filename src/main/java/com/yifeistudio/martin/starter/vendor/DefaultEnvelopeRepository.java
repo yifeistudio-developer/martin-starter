@@ -1,6 +1,6 @@
 package com.yifeistudio.martin.starter.vendor;
 
-import com.yifeistudio.martin.starter.DataRepository;
+import com.yifeistudio.martin.starter.EnvelopeRepository;
 import com.yifeistudio.martin.starter.model.AbstractEnvelope;
 import com.yifeistudio.martin.starter.model.EnvelopeStatusEnum;
 import com.yifeistudio.space.starter.config.SpringContextHelper;
@@ -17,12 +17,12 @@ import java.util.List;
  * @author : hongyi
  * created at 2022/4/26 - 19:31
  **/
-public class DefaultRepository implements DataRepository {
+public class DefaultEnvelopeRepository implements EnvelopeRepository {
 
     private DataSource dataSource;
 
 
-    public DefaultRepository() {
+    public DefaultEnvelopeRepository() {
         SpringContextHelper.getBean(DataSource.class)
                 .ifPresent(ds -> dataSource = ds);
     }
