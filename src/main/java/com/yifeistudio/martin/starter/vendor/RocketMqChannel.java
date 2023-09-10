@@ -35,7 +35,7 @@ public class RocketMqChannel implements Channel {
      * @return 投递回执
      */
     @Override
-    public Optional<String> post(AbstractEnvelope envelope) {
+    public Optional<String> post(AbstractEnvelope<?> envelope) {
         if (rocketMQTemplate == null) {
             log.warn("cannot find the rocketMQTemplate instance in the spring context. post-request is ignored.");
             return Optional.empty();
