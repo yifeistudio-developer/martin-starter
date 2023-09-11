@@ -30,7 +30,7 @@ ext {
     lombokVersion = '1.18.24'
     springBootVersion = '2.7.2'
     spaceVersion = '0.0.1-SNAPSHOT'
-    mybatisVersion = '3.5.10'
+    mybatisVersion = '3.5.3.2'
     mysqlVersion = '8.0.29'
     rocketMqVersion = '2.2.2'
 }
@@ -38,7 +38,7 @@ ext {
 dependencies {
 
     // 默认数据存储器
-    compileOnly "org.mybatis:mybatis:${mybatisVersion}"
+    compileOnly "com.baomidou:mybatis-plus:${mybatisVersion}"
 
     // 默认消息通道
     compileOnly "org.apache.rocketmq:rocketmq-spring-boot-starter:${rocketMqVersion}"

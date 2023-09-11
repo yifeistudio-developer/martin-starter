@@ -10,6 +10,7 @@ package com.yifeistudio.martin.starter.model;
  */
 public class TextEnvelope extends AbstractEnvelope<TextMessage> {
 
+
     private TextMessage message;
 
     @Override

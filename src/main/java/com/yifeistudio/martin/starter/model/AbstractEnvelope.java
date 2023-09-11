@@ -1,5 +1,8 @@
 package com.yifeistudio.martin.starter.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -11,6 +14,7 @@ import java.time.LocalDateTime;
  * created at 2022/4/26 - 13:00
  **/
 @Data
+@TableName(value = "t_envelope", autoResultMap = true)
 public abstract class AbstractEnvelope<T>{
 
     public abstract void setMessage(T message);
@@ -20,6 +24,7 @@ public abstract class AbstractEnvelope<T>{
     /**
      * ID
      */
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
