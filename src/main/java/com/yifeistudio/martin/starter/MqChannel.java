@@ -12,7 +12,7 @@ import java.util.Optional;
  * @author : hongyi
  * created at 2022/4/26 - 15:43
  **/
-public interface Channel {
+public interface MqChannel {
 
     /**
      * 同步投递

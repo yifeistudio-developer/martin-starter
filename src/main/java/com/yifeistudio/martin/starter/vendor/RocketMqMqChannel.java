@@ -1,6 +1,6 @@
 package com.yifeistudio.martin.starter.vendor;
 
-import com.yifeistudio.martin.starter.Channel;
+import com.yifeistudio.martin.starter.MqChannel;
 import com.yifeistudio.martin.starter.model.AbstractEnvelope;
 import com.yifeistudio.space.starter.config.SpringContextHelper;
 import com.yifeistudio.space.unit.model.DefaultPromise;
@@ -19,11 +19,11 @@ import java.util.Optional;
  * created at 2022/4/26 - 15:49
  **/
 @Slf4j
-public class RocketMqChannel implements Channel {
+public class RocketMqMqChannel implements MqChannel {
 
     private RocketMQTemplate rocketMQTemplate;
 
-    public RocketMqChannel() {
+    public RocketMqMqChannel() {
         SpringContextHelper.getBean(RocketMQTemplate.class).ifPresent(bean -> rocketMQTemplate = bean);
     }
 

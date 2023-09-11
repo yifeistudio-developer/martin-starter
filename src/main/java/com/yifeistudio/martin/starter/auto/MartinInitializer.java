@@ -2,11 +2,11 @@ package com.yifeistudio.martin.starter.auto;
 
 import com.yifeistudio.martin.starter.Coordinator;
 import com.yifeistudio.martin.starter.EnvelopeRepository;
-import com.yifeistudio.martin.starter.Channel;
+import com.yifeistudio.martin.starter.MqChannel;
 import com.yifeistudio.martin.starter.MartinProperties;
 import com.yifeistudio.martin.starter.vendor.DefaultCoordinator;
 import com.yifeistudio.martin.starter.vendor.DefaultEnvelopeRepository;
-import com.yifeistudio.martin.starter.vendor.RocketMqChannel;
+import com.yifeistudio.martin.starter.vendor.RocketMqMqChannel;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -45,9 +45,9 @@ class MartinInitializer {
 
     @Bean
     @ConditionalOnBean(RocketMQTemplate.class)
-    @ConditionalOnMissingBean(Channel.class)
-    public Channel configMessageChannel() {
-        return new RocketMqChannel();
+    @ConditionalOnMissingBean(MqChannel.class)
+    public MqChannel configMessageChannel() {
+        return new RocketMqMqChannel();
     }
 
     @Bean
