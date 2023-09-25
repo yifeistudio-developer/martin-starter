@@ -15,11 +15,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class MartinProperties {
 
     /**
-     * 是否启用
-     */
-    private boolean enable = true;
-
-    /**
      * 启动模式
      */
     private StartModeEnum mode = StartModeEnum.INIT;
@@ -64,7 +59,6 @@ public class MartinProperties {
          * 归档消息记录大小
          */
         private int batchSize;
-
 
     }
 }

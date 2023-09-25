@@ -29,6 +29,7 @@ class MartinListener implements ApplicationListener<ApplicationPreparedEvent> {
      *
      * @param event the event to respond to
      */
+    @SuppressWarnings("NullableProblems")
     @Override
     public void onApplicationEvent(ApplicationPreparedEvent event) {
         StartModeEnum mode = properties.getMode();
@@ -37,5 +38,5 @@ class MartinListener implements ApplicationListener<ApplicationPreparedEvent> {
         }
     }
 
-
 }
+///~

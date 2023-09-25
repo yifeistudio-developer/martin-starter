@@ -45,7 +45,6 @@ public class DefaultCoordinator implements Coordinator {
     @Override
     public boolean tryLock(String key, long timeout, TimeUnit timeUnit) {
 
-
         return false;
     }
 }

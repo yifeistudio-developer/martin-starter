@@ -8,4 +8,11 @@ package com.yifeistudio.martin.starter;
  **/
 public interface Scheduler {
 
+    void tryPost();
+
+    void trySign();
+
+    void doArchive();
+
+
 }

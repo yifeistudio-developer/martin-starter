@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * created at 2022/4/26 - 13:14
  **/
 @Data
-public class Event {
+public class MartinEvent {
 
     /**
      * ID
