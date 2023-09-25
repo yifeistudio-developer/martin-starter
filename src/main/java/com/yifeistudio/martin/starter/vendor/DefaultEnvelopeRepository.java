@@ -48,12 +48,12 @@ public class DefaultEnvelopeRepository implements EnvelopeRepository {
     }
 
     @Override
-    public <T> AbstractEnvelope<T> getById(long id) {
+    public <T, E extends AbstractEnvelope<T>> E getById(long id) {
         return null;
     }
 
     @Override
-    public <T> AbstractEnvelope<T> getBySign(String sign) {
+    public <T, E extends AbstractEnvelope<T>> E getBySign(String sign) {
         try {
             Connection connection = dataSource.getConnection();
         } catch (SQLException e) {
@@ -70,7 +70,7 @@ public class DefaultEnvelopeRepository implements EnvelopeRepository {
      * @return 信件列表
      */
     @Override
-    public <T> List<AbstractEnvelope<T>> listByStatus(int limit, EnvelopeStatusEnum... status) {
+    public <T, E extends AbstractEnvelope<T>> List<E> listByStatus(int limit, EnvelopeStatusEnum... status) {
         return null;
     }
 
@@ -86,6 +86,5 @@ public class DefaultEnvelopeRepository implements EnvelopeRepository {
             throw new RuntimeException(e);
         }
     }
-
 
 }

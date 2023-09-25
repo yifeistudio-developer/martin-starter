@@ -23,9 +23,15 @@ public interface EnvelopeRepository {
      */
     void updateById(AbstractEnvelope<?> envelope);
 
-    <T> AbstractEnvelope<T> getById(long id);
+    /**
+     * 根据ID获取消息
+     * @param id 消息ID
+     * @return 指定消息
+     * @param <T> 消息类型
+     */
+    <T, E extends AbstractEnvelope<T>> E  getById(long id);
 
-    <T> AbstractEnvelope<T> getBySign(String sign);
+    <T, E extends AbstractEnvelope<T>> E getBySign(String sign);
 
     /**
      * 根据状态查询
@@ -34,7 +40,7 @@ public interface EnvelopeRepository {
      * @param status 状态
      * @return 信件列表
      */
-    <T> List<AbstractEnvelope<T>> listByStatus(int limit, EnvelopeStatusEnum... status);
+    <T, E extends AbstractEnvelope<T>> List<E> listByStatus(int limit, EnvelopeStatusEnum... status);
 
     /**
      * 初始化数据库配置
