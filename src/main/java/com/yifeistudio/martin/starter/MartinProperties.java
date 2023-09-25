@@ -24,5 +24,47 @@ public class MartinProperties {
      */
     private StartModeEnum mode = StartModeEnum.INIT;
 
+    /**
+     * 最大生存周期
+     */
+    private int maxAge = 3;
 
+
+    /**
+     * 收件箱配置
+     */
+    @Data
+    public static class InboxProperties {
+
+        /**
+         * 最大生存周期
+         */
+        private int maxAge;
+    }
+
+    /**
+     * 发件箱配置
+     */
+    @Data
+    public static class OutboxProperties {
+
+        /**
+         * 最大生存周期
+         */
+        private int maxAge;
+    }
+
+    /**
+     * 归档配置
+     */
+    @Data
+    public static class ArchiveProperties {
+
+        /**
+         * 归档消息记录大小
+         */
+        private int batchSize;
+
+
+    }
 }
