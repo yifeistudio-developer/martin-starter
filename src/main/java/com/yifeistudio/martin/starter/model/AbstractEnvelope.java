@@ -33,16 +33,6 @@ public abstract class AbstractEnvelope<T>{
     private EnvelopeTypeEnum type;
 
     /**
-     * 主题
-     */
-    private String topic;
-
-    /**
-     * 标签
-     */
-    private String tags;
-
-    /**
      * 投递人ID
      */
     private Long postedBy;

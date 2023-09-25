@@ -8,7 +8,6 @@ import com.yifeistudio.space.unit.model.Promise;
 import com.yifeistudio.space.unit.util.Asserts;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
-import org.springframework.util.StringUtils;
 
 import java.util.Optional;
 
@@ -43,18 +42,6 @@ public class RocketMqMqChannel implements MqChannel {
         Asserts.notNull(envelope, "envelope is required nonNull.");
         Asserts.notNull(envelope.getMessage(), "message is required nonNull.");
         Asserts.notNull(envelope.getSign(), "sign is required nonNull.");
-        String topic = envelope.getTopic();
-        String tags = envelope.getTags();
-        Asserts.notNull(topic, "cannot find any available.");
-        String destination = topic.trim();
-        if (StringUtils.hasText(tags)) {
-            destination = destination + ":" + tags;
-        }
-//        Message<String> message = MessageBuilder.withPayload(envelope.getMessage())
-//                .setHeader("envelope-sign", envelope.getSign())
-//                .build();
-//        SendResult sendResult = rocketMQTemplate.syncSend(destination, message);
-//        return Optional.ofNullable(sendResult.getMsgId());
         return Optional.empty();
     }
 
