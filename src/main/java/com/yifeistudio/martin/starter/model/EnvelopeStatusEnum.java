@@ -56,7 +56,7 @@ public enum EnvelopeStatusEnum {
     private final String desc;
 
     @JsonCreator
-    public static EnvelopeStatusEnum of(int code) {
+    public static EnvelopeStatusEnum of(Integer code) {
         return Arrays.stream(EnvelopeStatusEnum.values())
                 .filter(v -> v.getCode() == code)
                 .findAny()
